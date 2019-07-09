@@ -1,0 +1,14 @@
+
+.container{
+    @extend %full-screen-wh;
+    @extend %flex-hv-c;
+    flex-direction: column;
+    background: #fff;
+}
+
+.login_form {
+    width: 300px;
+}
+.button{
+    width: 100%;
+}

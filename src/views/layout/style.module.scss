@@ -1,0 +1,27 @@
+.container{
+    @extend %full-screen-wh;
+}
+.header{
+    @extend %flex-v-c;
+    height: 60px;
+    cursor: pointer;
+    position: relative;
+    background-color: #2a3444;
+    color: #fff;
+    .title{
+        font-size: 18px;
+        font-weight: 700;
+        margin-left: 40px;
+    }
+    .userInfo{
+        position: absolute;
+        right: 40px;
+    }
+}
+.body{
+    height: calc(100vh - 60px);
+    display: flex;
+    .content{
+        flex:1;
+    }
+}
