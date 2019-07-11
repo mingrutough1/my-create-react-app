@@ -497,6 +497,9 @@ module.exports = function(webpackEnv) {
       ],
     },
     plugins: [
+      new webpack.ProvidePlugin({
+        '$axios': [path.resolve(__dirname,'../src/config'), 'axios']
+      }),
       // Generates an `index.html` file with the <script> injected.
       new HtmlWebpackPlugin(
         Object.assign(

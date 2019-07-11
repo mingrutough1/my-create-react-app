@@ -6,11 +6,26 @@ import style from './style.module.scss';
 import UserManage from '@/views/userManage/user';
 import PublicFactor from '@/views/researchManage/publicFactor';
 import NotFound from '@/views/notFound';
+import RouteGuard from '@/components/RouteGuard';
+
 import {
-    Route,
     Switch,
+    Redirect,
+    Route
 } from 'react-router-dom';
 
+const authRoute = [
+    {
+        path: '/userManage',
+        exact: true,
+        component: UserManage,
+    },
+    {
+        path: '/publicFactor',
+        exact: true,
+        component: PublicFactor,
+    }
+];
 class AppLayout extends React.Component {
     constructor(props) {
         super(props);
@@ -23,9 +38,13 @@ class AppLayout extends React.Component {
                 <div className={style.body}>
                     <AppNav></AppNav>
                     <div className={style.content}>
-                        <Switch>                                                                                                 
-                            <Route path="/userManage" exact component={UserManage}></Route>     
-                            <Route path="/publicFactor" exact component={PublicFactor}></Route>  
+                        <Switch>                     
+                            <Redirect from="/" to="/userManage" exact></Redirect> 
+                            {
+                                authRoute.map(item => (
+                                    <RouteGuard path={item.path} exact={item.exact} component={item.component} key={item.path}></RouteGuard>
+                                ))
+                            }
                             <Route component={NotFound}></Route>                                                                                               
                         </Switch>  
                     </div>

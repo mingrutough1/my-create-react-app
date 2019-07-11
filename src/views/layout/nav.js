@@ -25,8 +25,13 @@ class Nav extends React.Component {
     });
     history.listen((e) => {
       this.setState({
-        current: e.pathname.slice(1)
+        current: e.pathname.slice(1),
       });
+      if (this.state.openKeys.length < 1) {
+        this.setState({
+          openKeys: [this.openKeysMap[e.pathname.slice(1)]]
+        });
+      }
     });
   }
   handleOpenChange = e => {

@@ -8,6 +8,7 @@
     "@typescript-eslint/eslint-plugin": "1.6.0",
     "@typescript-eslint/parser": "1.6.0",
     "antd": "^3.20.1",
+    "axios": "^0.19.0",
     "babel-eslint": "10.0.1",
     "babel-jest": "^24.8.0",
     "babel-loader": "8.0.5",
@@ -66,7 +67,10 @@
     "test": "node scripts/test.js"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": "react-app",
+    "globals": {
+      "$axios": true
+    }
   },
   "browserslist": {
     "production": [
@@ -141,8 +145,8 @@
       [
         "@babel/plugin-proposal-decorators",
         {
-        "legacy": true
-        } 
+          "legacy": true
+        }
       ]
     ]
   },
