@@ -1,6 +1,12 @@
 import React from 'react';
 import { Route, withRouter} from 'react-router-dom';
+import {inject, observer} from "mobx-react";
+
 @withRouter
+@inject(stores => ({
+    setUserInfo: stores.store.setUserInfo
+}))
+@observer
 class RouterGuard extends React.Component {
     constructor(props) {
         super(props);
@@ -18,6 +24,9 @@ class RouterGuard extends React.Component {
                 this.setState({
                     requested: true,
                     hasAuth: true,
+                });
+                this.props.setUserInfo({
+                    userInfo: res.data.data
                 });
             } else {
                 this.props.history.push('/login');

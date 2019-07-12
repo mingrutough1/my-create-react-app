@@ -3,7 +3,13 @@ import React from 'react'
 import style from './style.module.scss';
 import { Form, Icon, Input, Button } from 'antd';
 import { withRouter } from 'react-router-dom';
+import {inject, observer} from "mobx-react";
+
 @withRouter
+@inject(stores => ({
+  setUserInfo: stores.store.setUserInfo
+}))
+@observer
 class NormalLoginForm extends React.Component {
   constructor(props) {
     super(props);
@@ -28,7 +34,6 @@ class NormalLoginForm extends React.Component {
     const params = {
       ...userInfo
     };
-    console.log(this.vCodeRef);
     if (vCodeShow) { // 有验证码
       params.requestId = requestId;
       params.validCode = this.vCodeRef.current.state.value;
@@ -36,6 +41,9 @@ class NormalLoginForm extends React.Component {
     $axios.post('/login.json', params).then( (res) => {
       const result = res.data;
       if (result.code === '0') {
+        this.props.setUserInfo({
+          userInfo: res.data.data
+        });
         this.props.history.push('/');
       } else if (result.code === '11') {
         const codeData = JSON.parse(result.data[0]);

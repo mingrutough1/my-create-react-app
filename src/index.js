@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'mobx-react';
 import App from './views';
-import {
-    BrowserRouter,
-} from 'react-router-dom';
+import Store from './mobx';
+
+const store = new Store();
 ReactDOM.render(
-    <BrowserRouter >
+    <Provider store={store}>
         <App />
-    </BrowserRouter>, document.getElementById('root'));
+    </Provider>, document.getElementById('root'));
 
