@@ -1,5 +1,6 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, withRouter} from 'react-router-dom';
+@withRouter
 class RouterGuard extends React.Component {
     constructor(props) {
         super(props);
@@ -10,16 +11,16 @@ class RouterGuard extends React.Component {
     }
     componentWillMount() {
         console.log('routeGuard');
-
     }
     componentDidMount() {
-        $axios.get('/login').then((res)=>{
-            console.log(res);
+        $axios.get('/login.json').then((res)=>{
             if (res.data.code === '0') {
                 this.setState({
                     requested: true,
                     hasAuth: true,
                 });
+            } else {
+                this.props.history.push('/login');
             }
         });
     }

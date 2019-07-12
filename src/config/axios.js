@@ -29,11 +29,20 @@ const status = [
     { code: 'CAS04', msg: 'CAS服务器调用失败但返回结果为空' }
   ];
 const instance = axios.create({
-    baseURL: 'https://some-domain.com/api/',
+    baseURL: '/kyfadm-api',
     withCredentials: true,
   });
 instance.interceptors.request.use((config) => {
-    return config;
+  if (config.method === 'post') {
+    config.transformRequest = [(data) => {
+      const formData = new FormData();
+      for (const key in data) {
+        formData.append(key, data[key]);
+      }
+      return formData;
+    }];
+  }
+  return config;
 });
 instance.interceptors.response.use(function (res) {
     // Do something with response data
@@ -52,7 +61,7 @@ instance.interceptors.response.use(function (res) {
           }
         };
     }
-    message.warning(status.find(item => item.code === code).msg);
+    message.warning(status.find(item => item.code === code).msg || result.msg);
     if (code === '21') window.location.href = '/login';
     return res;
   }, function (error) {

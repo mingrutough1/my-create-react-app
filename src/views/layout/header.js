@@ -9,7 +9,11 @@ class Header extends React.Component {
         this.state = {  };
     }
     logout = () => {
-        this.props.history.push('/login');
+        $axios.get('/logout.json').then((res) => {
+            if (res.data.code === '0') {
+                this.props.history.push('/login');
+            }
+        });
     }
     render() {
         return (
