@@ -56,11 +56,11 @@ server {
               error_page 404 = /index.html;
         }
 
-		location /kyf {
+		location /kyf-adm {
                 proxy_pass http://127.0.0.1:80/;
         }
 		
-		location /kyf/ {
+		location /kyf-adm/ {
                 proxy_pass http://127.0.0.1:80/;
         }
 		
