@@ -62,7 +62,7 @@ instance.interceptors.response.use(function (res) {
         };
     }
     message.warning(status.find(item => item.code === code).msg || result.msg);
-    if (code === '21') window.location.href = '/login';
+    if (code === '21') window.location.href = 'login';
     return res;
   }, function (error) {
     // Do something with response error

@@ -10,7 +10,7 @@ import Layout from './layout';
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/kyf-adm">
         <Switch>                                                                                                 
             <Route path="/login" exact component={Login}></Route>     
             <Route component={Layout}></Route>                                                                                               
