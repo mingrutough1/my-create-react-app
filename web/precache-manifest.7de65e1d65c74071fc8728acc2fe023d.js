@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "3fe17e5e61f53d8f2eeaae7197540ced",
+    "revision": "f5401f9f1c90d6325a89795a18657a86",
     "url": "/kyf-adm/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/kyf-adm/static/css/2.dcc683d0.chunk.css"
   },
   {
-    "revision": "a5289c83678a0f686062",
+    "revision": "bd918423ad247e24af26",
     "url": "/kyf-adm/static/css/main.b46439f3.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/kyf-adm/static/js/2.dec0f001.chunk.js"
   },
   {
-    "revision": "a5289c83678a0f686062",
-    "url": "/kyf-adm/static/js/main.35cd8ffb.chunk.js"
+    "revision": "bd918423ad247e24af26",
+    "url": "/kyf-adm/static/js/main.c5670df4.chunk.js"
   },
   {
     "revision": "fa62e6ddde939a377a66",
