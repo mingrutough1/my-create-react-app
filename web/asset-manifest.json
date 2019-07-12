@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/kyfadm/static/css/main.b46439f3.chunk.css",
+    "main.js": "/kyfadm/static/js/main.35cd8ffb.chunk.js",
+    "main.js.map": "/kyfadm/static/js/main.35cd8ffb.chunk.js.map",
+    "runtime~main.js": "/kyfadm/static/js/runtime~main.349d5ec2.js",
+    "runtime~main.js.map": "/kyfadm/static/js/runtime~main.349d5ec2.js.map",
+    "static/css/2.dcc683d0.chunk.css": "/kyfadm/static/css/2.dcc683d0.chunk.css",
+    "static/js/2.72bbf6c7.chunk.js": "/kyfadm/static/js/2.72bbf6c7.chunk.js",
+    "static/js/2.72bbf6c7.chunk.js.map": "/kyfadm/static/js/2.72bbf6c7.chunk.js.map",
+    "index.html": "/kyfadm/index.html",
+    "precache-manifest.0237fca999fb0c0e9162c72e5986dde7.js": "/kyfadm/precache-manifest.0237fca999fb0c0e9162c72e5986dde7.js",
+    "service-worker.js": "/kyfadm/service-worker.js",
+    "static/css/2.dcc683d0.chunk.css.map": "/kyfadm/static/css/2.dcc683d0.chunk.css.map",
+    "static/css/main.b46439f3.chunk.css.map": "/kyfadm/static/css/main.b46439f3.chunk.css.map"
+  }
+}
