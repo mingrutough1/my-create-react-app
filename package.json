@@ -71,7 +71,8 @@
   "eslintConfig": {
     "extends": "react-app",
     "globals": {
-      "$axios": true
+      "$axios": true,
+      "$util": true
     }
   },
   "browserslist": {

@@ -15,10 +15,15 @@ class RouterGuard extends React.Component {
             hasAuth: false,
         };
     }
-    componentWillMount() {
-        console.log('routeGuard');
-    }
     componentDidMount() {
+        const env = process.env.NODE_ENV;
+        if (env === "development") {
+            this.setState({
+                requested: true,
+                hasAuth: true,
+            });
+            return;
+        }
         $axios.get('/login.json').then((res)=>{
             if (res.data.code === '0') {
                 this.setState({
