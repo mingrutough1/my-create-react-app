@@ -4,7 +4,7 @@ import {inject, observer} from "mobx-react";
 
 @withRouter
 @inject(stores => ({
-    setUserInfo: stores.store.setUserInfo
+    setUserInfo: stores.store.UseInfo.setUserInfo
 }))
 @observer
 class RouterGuard extends React.Component {

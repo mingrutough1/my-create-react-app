@@ -6,8 +6,8 @@ import {inject, observer} from "mobx-react";
 
 @withRouter
 @inject(stores => ({
-    userInfo: stores.store.userInfo,
-    setUserInfo: stores.store.setUserInfo
+    userInfo: stores.store.UseInfo.userInfo,
+    setUserInfo: stores.store.UseInfo.setUserInfo
 }))
 @observer
 class Header extends React.Component {

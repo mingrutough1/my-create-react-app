@@ -7,7 +7,7 @@ import {inject, observer} from "mobx-react";
 
 @withRouter
 @inject(stores => ({
-  setUserInfo: stores.store.setUserInfo
+  setUserInfo: stores.store.UseInfo.setUserInfo
 }))
 @observer
 class NormalLoginForm extends React.Component {

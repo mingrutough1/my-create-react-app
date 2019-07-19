@@ -6,8 +6,8 @@ import style from './style.module.scss';
 
 const { Option ,OptGroup} = Select;
 @inject(stores => ({
-    rolesOptions: stores.store.rolesOptions,
-    setRolesOptions: stores.store.setRolesOptions
+    rolesOptions: stores.store.UseInfo.rolesOptions,
+    setRolesOptions: stores.store.UseInfo.setRolesOptions
 }))
 @observer
 class FilterForms extends React.Component {

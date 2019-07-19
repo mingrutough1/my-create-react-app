@@ -6,7 +6,7 @@ const { Option ,OptGroup} = Select;
 
 @Form.create({})
 @inject(stores => ({
-    rolesOptions: stores.store.rolesOptions,
+    rolesOptions: stores.store.UseInfo.rolesOptions,
 }))
 @observer
 class NewUserModal extends React.Component {

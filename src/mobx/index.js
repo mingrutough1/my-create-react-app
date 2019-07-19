@@ -1,21 +1,10 @@
-import { observable, action }from 'mobx';
+import UseInfo from './userInfo';
+import PublicFactor from './publicFactor';
+
 class Store {
-    @observable userInfo = {
-        name: '',
-        permissions: [],
-        token: '',
-        identity: {
-            id: '',
-            name: ''
-        }
-    };
-    @observable rolesOptions = {}
-    @action.bound setUserInfo(payload) {
-        this.userInfo = payload.userInfo;
-    }
-    @action.bound setRolesOptions(payload) {
-        this.rolesOptions = payload.rolesOptions;
+    constructor() {
+        this.UseInfo = new UseInfo();
+        this.PublicFactor = new PublicFactor();
     }
 }
-
 export default Store;
