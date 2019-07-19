@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button , Upload, message} from 'antd';
+import { Button , Upload, message, Popconfirm} from 'antd';
 import style from './style.module.scss';
 
 class ActionButtons extends React.Component {
@@ -8,13 +8,7 @@ class ActionButtons extends React.Component {
         this.state = {
             uploadText: '导入',
             src: '',
-            visible: false
         };
-    }
-    toggleVisible = (visible) => {
-        this.setState({
-            visible,
-        });
     }
     onUpLoadChange = (info) => {
         this.setState({
@@ -25,6 +19,7 @@ class ActionButtons extends React.Component {
             this.setState({
                 uploadText: '导入'
             });
+            this.props.resetFormAndGet();
         } else if (info.file.status === 'error') {
             message.error(`${info.file.name} 上传失败.`);
             this.setState({
@@ -32,8 +27,17 @@ class ActionButtons extends React.Component {
             });
         }
     }
+    deleteAll = () => {
+        $axios.post('/factor/delete.json', {
+            all: true
+        }).then((res) => {
+            if (res.data.code === '0') {
+                message.success(`全部删除成功`);
+            }
+        });
+    }
     export = () => {
-        $util.iframeDownload("/kyfadm-api/user/export.json");
+        $util.iframeDownload("/kyfadm-api/factor/export.json");
     }
     render() {
         return (
@@ -41,13 +45,20 @@ class ActionButtons extends React.Component {
                 <Upload 
                 showUploadList={false}
                 name = 'file'
-                action="/kyfadm-api/user/import.json"
+                action="/kyfadm-api/factor/import.json"
                 onChange={this.onUpLoadChange}
                 >
                     <Button type="primary" >{this.state.uploadText}</Button>
                 </Upload>
                 <Button type="primary" style={{marginLeft: '10px'}} onClick={this.export}>导出</Button>
-                <Button type="primary" style={{marginLeft: '10px'}} onClick={this.export}>全部删除</Button>
+                <Popconfirm
+                    title="确定要删除全部?"
+                    onConfirm={this.deleteAll}
+                    okText="删除"
+                    cancelText="取消"
+                >
+                    <Button type="primary" style={{marginLeft: '10px'}}>全部删除</Button>
+                </Popconfirm>        
             </div>
         );
     }

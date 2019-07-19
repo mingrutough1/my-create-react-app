@@ -1,47 +1,94 @@
 import React from 'react';
-import { Table ,Switch} from 'antd';
+import { Table } from 'antd';
 
+const wordElipsis = {
+  textOverflow: 'ellipsis',
+  width: '200px',
+  overflow: 'hidden',
+  whiteSpace: 'nowrap'
+}
 const columns = [
     {
-        title: '序号',
-        dataIndex: 'order',
-        key: 'order',
-        width: 80
+      title: '序号',
+      dataIndex: 'order',
+      key: 'order',
+      width: 80,
+      fixed: 'left'
     },
     {
-      title: '用户ID',
-      dataIndex: 'userId',
-      key: 'userId',
-      width: 200
-
+      title: '因子ID',
+      dataIndex: 'factorId',
+      key: 'factorId',
     },
     {
-      title: '用户名称',
-      dataIndex: 'userName',
-      key: 'userName',
-      width: 200
-
+      title: '因子code',
+      dataIndex: 'factorCode',
+      key: 'factorCode',
     },
     {
-      title: '用户邮箱',
-      dataIndex: 'email',
-      key: 'email',
-      width: 300
-    },
-    {
-        title: '用户角色',
-        key: 'userRoles',
-        render: (data) => {
-          return (<div style={{ wordWrap: 'break-word', wordBreak: 'break-all' }}>{data && data.userRoles.map(item => item.label).join('，')}</div>)
-        }
-      },
-    {
-      title: '操作',
-      key: 'action',
+      title: '因子名',
+      key: 'factorName',
       render: (data) => {
-        return (<Switch defaultChecked={data.isValid} onChange={handleSwich(data.userId)}></Switch>)
+        return (<div style={wordElipsis} title={data.factorName}>{data.factorName}</div>)
       }
     },
+    {
+      title: '对象类型',
+      dataIndex: 'objectType',
+      key: 'objectType',
+      width: 200
+
+    },
+    {
+      title: '数据频率',
+      dataIndex: 'dataFrequency',
+      key: 'dataFrequency',
+      width: 200
+
+    },
+    {
+      title: '是否计算',
+      dataIndex: 'isCalculate',
+      key: 'isCalculate',
+      width: 300
+    },    {
+      title: '算法优先级',
+      dataIndex: 'calculatePriority',
+      key: 'calculatePriority',
+      width: 200
+    },
+    {
+      title: '算法描述',
+      key: 'algorithmDesc',
+      render: (data) => {
+        return (<div style={wordElipsis} title={data.algorithmDesc}>{data.algorithmDesc}</div>)
+      }
+    },
+    {
+      title: '计算窗口',
+      dataIndex: 'calculateWindow',
+      key: 'calculateWindow',
+      width: 200
+    },
+    {
+      title: '窗口偏移',
+      dataIndex: 'windowShift',
+      key: 'windowShift',
+      width: 200
+
+    },
+    {
+      title: '计算细节',
+      dataIndex: 'dataProcessDetail',
+      key: 'dataProcessDetail',
+      width: 200
+    },
+    {
+      title: '操作',
+      fixed: 'right',
+      key: 'action',
+      width: 80,
+      render: () => <a href="javascript:;">action</a>},
   ];
 
 function handleSwich (userId) {
@@ -62,12 +109,21 @@ class Lists extends React.Component {
     render() {
         return (
           <Table 
-          scroll={{y: 'calc(100vh - 320px)'}}
+          scroll={{
+            x: 2000
+          }}
           bordered 
           loading = {this.props.loading}
           columns={columns} 
-          dataSource={this.props.userListData} 
-          pagination={false}/>
+          dataSource={this.props.factorListData} 
+          pagination={
+            {
+              current: this.props.pno,
+              pageSize: this.props.size,
+              total: this.props.total,
+              onChange: this.props.setCurPageAndFet
+            }
+          }/>
         );
     }
 }

@@ -52,11 +52,9 @@ const columns = [
 
 function handleSwich (data) {
   return () => {
-    if (!data.isValid){
-      return;
-    }
-    $axios.post('/user/delete.json', {
-      userId: data.userKey
+    $axios.post('/user/changeValid.json', {
+      userId: data.userKey,
+      isValid: !data.isValid
     }).then((res) => {
       if (res.data.code === '0') {
       }

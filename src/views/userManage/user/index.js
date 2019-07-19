@@ -43,7 +43,9 @@ class UserManage extends React.Component {
             userName,
         };
         if (valid !== 'all') {
-            params.valid = Boolean(valid);
+            params.isValid = Boolean(valid);
+        } else {
+            params.isValid = '';
         }
         if (role.length > 0) {
             params.role = role.join(',');

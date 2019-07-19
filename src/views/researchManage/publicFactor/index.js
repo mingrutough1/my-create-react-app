@@ -10,31 +10,85 @@ class PublicFactor extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            userListData: [],
+            factorListData: [],
             loading: false,
+            factorId: '',
+            factorCode: '',
+            factorName: '',
+            tier: '',
+            objectType: '',
+            isBottom: 'all',
+            isCalced: 'all',
+            pno: 1,
+            size: 10,
+            total: 0,
         };
+    }
+    resetFormAndGet = () =>{
+        this.setState({
+            factorId: '',
+            factorCode: '',
+            factorName: '',
+            tier: '',
+            objectType: '',
+            isBottom: 'all',
+            isCalced: 'all',
+            pno: 1,
+            size: 10,
+            total: 0,
+        }, ()=> {
+            this.getFactors();
+        });
+    }
+    setCurPageAndFet = (pno) => {
+        this.setState({
+            pno,
+        }, ()=> {
+            this.getFactors();
+        });
     }
     componentWillMount() {
-        this.getUsers();
+        this.getFactors();
     }
-    getUsers = (param) => {
+    setFormState = (key, value) =>{
+        this.setState({ 
+            [key]: value    
+        });
+    }
+    getFactors = () => {
+        const {factorId, factorCode, factorName, tier, objectType, isBottom, isCalced, pno, size} = this.state;
         const params = {
-            ...param
+            factorId,
+            factorCode,
+            factorName,
+            tier,
+            pno,
+            size
         };
+        if (isBottom !== 'all') {
+            params.isBottom = Boolean(isBottom);
+        }
+        if (isCalced !== 'all') {
+            params.isCalced = Boolean(isCalced);
+        }
         this.setState({
             loading: true
         });
-        $axios.get('/user/query.json', {
+        $axios.get('/factor/query.json', {
             params,
         }).then((res) => {
             if (res.data.code === '0') {
-                const data = res.data.data || [];
-                data.forEach((item, index) => {
+                const data = res.data.data;
+                const result = data.result || [];
+                result.forEach((item, index) => {
                     item.order = index + 1;
-                    item.key = item.userId;
+                    item.key = item.pid;
                 });
                 this.setState({
-                    userListData: data,
+                    factorListData: result,
+                    pno: data.pno,
+                    size: data.size,
+                    total: data.total,
                 });
             }
             this.setState({
@@ -43,11 +97,28 @@ class PublicFactor extends React.Component {
         });
     }
     render() {
+        const {factorId, factorCode, factorName, tier, objectType, isBottom, isCalced, pno, size, total} = this.state;
+        const form = {
+            factorId,
+            factorCode,
+            factorName,
+            tier,
+            objectType,
+            isBottom,
+            isCalced,
+            setFormState: this.setFormState
+        }
+        const pagi = {
+            pno,
+            size,
+            total,
+            setCurPageAndFet: this.setCurPageAndFet
+        }
         return (
             <div className={style.container}>
-                <FilterForms getUsers={this.getUsers}></FilterForms>
-                <ActionButtons></ActionButtons>
-                <Lists userListData={this.state.userListData} loading={this.state.loading}></Lists>
+                <FilterForms getFactors={this.getFactors} {...form}></FilterForms>
+                <ActionButtons resetFormAndGet={this.resetFormAndGet}></ActionButtons>
+                <Lists factorListData={this.state.factorListData} loading={this.state.loading} {...pagi}></Lists>
             </div>
         );
     }

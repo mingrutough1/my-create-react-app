@@ -1,100 +1,62 @@
 import React from 'react';
 import { Form, Input, Select, Button } from 'antd';
-import {inject, observer} from "mobx-react";
 
 import style from './style.module.scss';
 
-const { Option ,OptGroup} = Select;
-@inject(stores => ({
-    rolesOptions: stores.store.UseInfo.rolesOptions,
-    setRolesOptions: stores.store.UseInfo.setRolesOptions
-}))
-@observer
+const { Option } = Select;
 class FilterForms extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            rolesOptions: {},
-            userId: '',
-            userName: '',
-            valid: 'all',
-            role: 'all',
-        };
+        this.state = {};
     }
-    componentWillMount() {
-        this.getRoles();
-    }
-    getUsers = () => {
-        const {userId, userName, valid, role} = this.state;
-        const param = {
-            userId,
-            userName,
-        };
-        if (valid !== 'all') {
-            param.valid = Boolean(valid);
-        }
-        if (role !== 'all') {
-            param.role = role;
-        }
-        this.props.getUsers(param);
-    }
-    getRoles = () => {
-        $axios.get('/user/roles.json').then((res) => {
-            if (res.data.code === '0') {
-                this.props.setRolesOptions({
-                    rolesOptions: res.data.data
-                });
-            }
-        });
+    getFactors = () => {
+        this.props.getFactors();
     }
     handleInputChange = type => (e) => {
-        this.setState({
-            [type]: e.target.value
-        });
+        this.props.setFormState(type, e.target.value);
     }
     handleSelectChange = type => (value) => {
-        this.setState({
-            [type]: value
-        });
+        this.props.setFormState(type, value);
     }
     render() {
-        const {userId, userName} = this.state;
-        const { rolesOptions } = this.props;
+        const {factorId, factorCode, factorName, tier, objectType, isBottom, isCalced} = this.props;
         return (
             <div className={style.formCon}>
                 <Form layout="inline">
                     <Form.Item label="因子ID：">
-                        <Input value={userId} onChange={this.handleInputChange('userId')} allowClear/>
+                        <Input value={factorId} onChange={this.handleInputChange('factorId')} allowClear/>
                     </Form.Item>
                     <Form.Item label="因子code：">
-                        <Input value={userId} onChange={this.handleInputChange('userId')} allowClear/>
+                        <Input value={factorCode} onChange={this.handleInputChange('factorCode')} allowClear/>
                     </Form.Item>
                     <Form.Item label="因子名称：">
-                        <Input value={userName} onChange={this.handleInputChange('userName')} allowClear/>
+                        <Input value={factorName} onChange={this.handleInputChange('factorName')} allowClear/>
                     </Form.Item>
-                    <Form.Item label="用户角色：">
-                        <Select mode="multiple" style={{ width: 220 }} onChange={this.handleSelectChange('role')}>
-                            {
-                                Object.keys(rolesOptions).map(item => (
-                                    <OptGroup label={item} key={item}>
-                                    {
-                                        Object.keys(rolesOptions[item]).map(child => (
-                                            rolesOptions[item][child]? <Option value={rolesOptions[item][child]} key={child}>{rolesOptions[item][child]}</Option> : null
-                                        ))
-                                    }
-                                    </OptGroup> 
-                                ))
-                            }                      
+                    <Form.Item label="层级：">
+                        <Input value={tier} onChange={this.handleInputChange('tier')} allowClear/>
+                    </Form.Item>
+                    {/* <Form.Item label="对象类型：">
+                        <Select value={objectType} style={{ width: 120 }} onChange={this.handleSelectChange('objectType')}>
+                            <Option value="all">全部</Option>
+                            <Option value="true">是</Option>
+                            <Option value="">否</Option>
                         </Select>
-                    </Form.Item>
-                    <Form.Item label="是否有效：">
-                        <Select defaultValue="all" style={{ width: 120 }} onChange={this.handleSelectChange('valid')}>
+                    </Form.Item> */}
+                    <Form.Item label="是否底层：">
+                        <Select value={isBottom} style={{ width: 120 }} onChange={this.handleSelectChange('isBottom')}>
                             <Option value="all">全部</Option>
                             <Option value="true">是</Option>
                             <Option value="">否</Option>
                         </Select>
                     </Form.Item>
-                    <Button type="primary" className={style.rightBtn} onClick={this.getUsers}>确定</Button>
+                    <Form.Item label="是否计算：">
+                        <Select value={isCalced} style={{ width: 120 }} onChange={this.handleSelectChange('isCalced')}>
+                            <Option value="all">全部</Option>
+                            <Option value="true">是</Option>
+                            <Option value="">否</Option>
+                        </Select>
+                    </Form.Item>
+                    <Button type="primary" className={style.rightBtn} onClick={this.getFactors}>确定</Button>
                 </Form>
             </div>
         );
