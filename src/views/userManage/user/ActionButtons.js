@@ -51,7 +51,7 @@ class ActionButtons extends React.Component {
                     <Button type="primary" style={{marginLeft: '10px'}} onClick={this.export}>导出</Button>
                 </div>
                 <Button type="primary" className={style.rightBtn} style={{top: '15px'}} onClick={() => this.setState({visible: true})}>新建用户</Button>
-                <NewUserModal visible={this.state.visible} toggleVisible={this.toggleVisible}/>
+                <NewUserModal visible={this.state.visible} toggleVisible={this.toggleVisible} resetFormAndGet={this.props.resetFormAndGet}/>
             </div>
         );
     }

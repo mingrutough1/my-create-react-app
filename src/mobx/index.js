@@ -9,9 +9,12 @@ class Store {
             name: ''
         }
     };
-
+    @observable rolesOptions = {}
     @action.bound setUserInfo(payload) {
         this.userInfo = payload.userInfo;
+    }
+    @action.bound setRolesOptions(payload) {
+        this.rolesOptions = payload.rolesOptions;
     }
 }
 

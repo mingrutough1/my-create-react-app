@@ -1,8 +1,15 @@
 import React from 'react';
 import { Form, Input, Select, Button } from 'antd';
+import {inject, observer} from "mobx-react";
+
 import style from './style.module.scss';
 
 const { Option ,OptGroup} = Select;
+@inject(stores => ({
+    rolesOptions: stores.store.rolesOptions,
+    setRolesOptions: stores.store.setRolesOptions
+}))
+@observer
 class FilterForms extends React.Component {
     constructor(props) {
         super(props);
@@ -34,7 +41,7 @@ class FilterForms extends React.Component {
     getRoles = () => {
         $axios.get('/user/roles.json').then((res) => {
             if (res.data.code === '0') {
-                this.setState({
+                this.props.setRolesOptions({
                     rolesOptions: res.data.data
                 });
             }
@@ -51,7 +58,8 @@ class FilterForms extends React.Component {
         });
     }
     render() {
-        const {userId, userName, rolesOptions} = this.state;
+        const {userId, userName} = this.state;
+        const { rolesOptions } = this.props;
         return (
             <div className={style.formCon}>
                 <Form layout="inline">

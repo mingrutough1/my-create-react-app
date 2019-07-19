@@ -1,57 +1,42 @@
 import React from 'react';
 import { Form, Input, Select, Button } from 'antd';
 import style from './style.module.scss';
+import {inject, observer} from "mobx-react";
 
 const { Option ,OptGroup} = Select;
+@inject(stores => ({
+    rolesOptions: stores.store.rolesOptions,
+    setRolesOptions: stores.store.setRolesOptions
+}))
+@observer
 class FilterForms extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            rolesOptions: {},
-            userId: '',
-            userName: '',
-            valid: 'all',
-            role: 'all',
-        };
+        this.state = {};
     }
     componentWillMount() {
         this.getRoles();
     }
     getUsers = () => {
-        const {userId, userName, valid, role} = this.state;
-        const param = {
-            userId,
-            userName,
-        };
-        if (valid !== 'all') {
-            param.valid = Boolean(valid);
-        }
-        if (role !== 'all') {
-            param.role = role;
-        }
-        this.props.getUsers(param);
+        this.props.getUsers();
     }
     getRoles = () => {
         $axios.get('/user/roles.json').then((res) => {
             if (res.data.code === '0') {
-                this.setState({
+                this.props.setRolesOptions({
                     rolesOptions: res.data.data
                 });
             }
         });
     }
     handleInputChange = type => (e) => {
-        this.setState({
-            [type]: e.target.value
-        });
+        this.props.setFormState(type, e.target.value);
     }
     handleSelectChange = type => (value) => {
-        this.setState({
-            [type]: value
-        });
+        this.props.setFormState(type, value);
     }
     render() {
-        const {userId, userName, rolesOptions} = this.state;
+        const {userId, userName, valid, role, rolesOptions} = this.props;
         return (
             <div className={style.formCon}>
                 <Form layout="inline">
@@ -62,7 +47,7 @@ class FilterForms extends React.Component {
                         <Input value={userName} onChange={this.handleInputChange('userName')} allowClear/>
                     </Form.Item>
                     <Form.Item label="用户角色：">
-                        <Select mode="multiple" style={{ width: 220 }} onChange={this.handleSelectChange('role')}>
+                        <Select mode="multiple" style={{ width: 220 }} onChange={this.handleSelectChange('role')} value={role}>
                             {
                                 Object.keys(rolesOptions).map(item => (
                                     <OptGroup label={item} key={item}>
@@ -77,7 +62,7 @@ class FilterForms extends React.Component {
                         </Select>
                     </Form.Item>
                     <Form.Item label="是否有效：">
-                        <Select defaultValue="all" style={{ width: 120 }} onChange={this.handleSelectChange('valid')}>
+                        <Select defaultValue="all" style={{ width: 120 }} onChange={this.handleSelectChange('valid')}  value={valid}>
                             <Option value="all">全部</Option>
                             <Option value="true">是</Option>
                             <Option value="">否</Option>

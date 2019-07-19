@@ -1,53 +1,62 @@
 import React from 'react';
 import { Table ,Switch} from 'antd';
 
+const wordBreak = { wordWrap: 'break-word', wordBreak: 'break-all' }
 const columns = [
     {
         title: '序号',
         dataIndex: 'order',
         key: 'order',
-        width: 80
+        width: 100,
     },
     {
       title: '用户ID',
-      dataIndex: 'userId',
-      key: 'userId',
-      width: 200
-
+      key: 'userKey',
+      width: 200,
+      render: (data) => {
+        return (<div style={wordBreak}>{data.userKey}</div>)
+      }
     },
     {
       title: '用户名称',
-      dataIndex: 'userName',
       key: 'userName',
-      width: 200
-
+      width: 200,
+      render: (data) => {
+        return (<div style={wordBreak}>{data.userName}</div>)
+      }
     },
     {
       title: '用户邮箱',
-      dataIndex: 'email',
       key: 'email',
-      width: 300
+      width: 300,
+      render: (data) => {
+        return (<div style={wordBreak}>{data.email}</div>)
+      }
     },
     {
         title: '用户角色',
         key: 'userRoles',
         render: (data) => {
-          return (<div style={{ wordWrap: 'break-word', wordBreak: 'break-all' }}>{data && data.userRoles.map(item => item.label).join('，')}</div>)
+          return (<div style={wordBreak}>{data && data.userRoles.map(item => item.label).join('，')}</div>)
         }
       },
     {
-      title: '操作',
+      title: '有效性',
+      width: 100,
       key: 'action',
       render: (data) => {
-        return (<Switch defaultChecked={data.isValid} onChange={handleSwich(data.userId)}></Switch>)
+        return (<Switch defaultChecked={data.isValid} onChange={handleSwich(data)}></Switch>)
       }
     },
   ];
 
-function handleSwich (userId) {
+function handleSwich (data) {
   return () => {
+    if (!data.isValid){
+      return;
+    }
     $axios.post('/user/delete.json', {
-      userId
+      userId: data.userKey
     }).then((res) => {
       if (res.data.code === '0') {
       }

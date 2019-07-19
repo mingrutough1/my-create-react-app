@@ -11,16 +11,43 @@ class UserManage extends React.Component {
         super(props);
         this.state = {
             userListData: [],
+            userId: '',
+            userName: '',
+            valid: 'all',
+            role: [],
             loading: false,
         };
+    }
+    resetFormAndGet = () =>{
+        this.setState({
+            userId: '',
+            userName: '',
+            valid: 'all',
+            role: [],      
+        }, ()=> {
+            this.getUsers();
+        });
+    }
+    setFormState = (key, value) =>{
+        this.setState({ 
+            [key]: value    
+        });
     }
     componentWillMount() {
         this.getUsers();
     }
-    getUsers = (param) => {
+    getUsers = () => {
+        const {userId, userName, valid, role} = this.state;
         const params = {
-            ...param
+            userId,
+            userName,
         };
+        if (valid !== 'all') {
+            params.valid = Boolean(valid);
+        }
+        if (role.length > 0) {
+            params.role = role.join(',');
+        }
         this.setState({
             loading: true
         });
@@ -43,10 +70,18 @@ class UserManage extends React.Component {
         });
     }
     render() {
+        const {userId, userName, valid, role } = this.state;
+        const form = {
+            userId,
+            userName,
+            valid,
+            role,
+            setFormState: this.setFormState
+        }
         return (
             <div className={style.container}>
-                <FilterForms getUsers={this.getUsers}></FilterForms>
-                <ActionButtons></ActionButtons>
+                <FilterForms getUsers={this.getUsers} {...form}></FilterForms>
+                <ActionButtons resetFormAndGet={this.resetFormAndGet}></ActionButtons>
                 <Lists userListData={this.state.userListData} loading={this.state.loading}></Lists>
             </div>
         );

@@ -28,12 +28,17 @@ const status = [
     { code: 'CAS03', msg: 'CAS服务器调用成功但返回结果为空' },
     { code: 'CAS04', msg: 'CAS服务器调用失败但返回结果为空' }
   ];
+
+const whiteList = [
+  '/login.json',
+  '/user/delete.json'
+];
 const instance = axios.create({
     baseURL: '/kyfadm-api',
     withCredentials: true,
   });
 instance.interceptors.request.use((config) => {
-  if (config.method === 'post') {
+  if (config.method === 'post' && whiteList.indexOf(config.url) >= 0) {
     config.transformRequest = [(data) => {
       const formData = new FormData();
       for (const key in data) {
