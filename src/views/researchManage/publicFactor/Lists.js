@@ -7,7 +7,8 @@ const wordElipsis = {
   overflow: 'hidden',
   whiteSpace: 'nowrap'
 }
-const columns = [
+function getColumns (self) {
+  return [
     {
       title: '序号',
       dataIndex: 'order',
@@ -90,25 +91,28 @@ const columns = [
       fixed: 'right',
       key: 'action',
       width: 80,
-      render: (data) => <a href="javascript:;" onClick={deleteItem(data.factorId)}>删除</a>},
+      render: (data) => {
+        return <span style={{color: '#1890ff', cursor: 'pointer'}} onClick={self.deleteItem(data.factorId)}>删除</span>
+      }},
   ];
-
-function deleteItem (factorId) {
-  return () => {
-    $axios.post('/factor/delete.json', {
-      factorId,
-      all: false
-    }).then((res) => {
-      if (res.data.code === '0') {
-        this.props.getUsers();
-      }
-    });
-  }
 }
+
+
 class Lists extends React.Component {
     constructor(props) {
         super(props);
         this.state = {  };
+        this.columns = getColumns(this);
+    }
+    deleteItem = (factorId) => () => {
+        $axios.post('/factor/delete.json', {
+          factorId,
+          all: false
+        }).then((res) => {
+          if (res.data.code === '0') {
+            this.props.setCurPageAndGet(1);
+          }
+        });
     }
     render() {
         return (
@@ -118,14 +122,14 @@ class Lists extends React.Component {
           }}
           bordered 
           loading = {this.props.loading}
-          columns={columns} 
+          columns={this.columns} 
           dataSource={this.props.factorListData} 
           pagination={
             {
               current: this.props.pno,
               pageSize: this.props.size,
               total: this.props.total,
-              onChange: this.props.setCurPageAndFet
+              onChange: this.props.setCurPageAndGet
             }
           }/>
         );

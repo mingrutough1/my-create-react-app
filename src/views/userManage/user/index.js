@@ -84,7 +84,7 @@ class UserManage extends React.Component {
             <div className={style.container}>
                 <FilterForms getUsers={this.getUsers} {...form}></FilterForms>
                 <ActionButtons resetFormAndGet={this.resetFormAndGet}></ActionButtons>
-                <Lists userListData={this.state.userListData} loading={this.state.loading} getUsers={this.getUsers} setFormState={this.setFormState}></Lists>
+                <Lists userListData={this.state.userListData} loading={this.state.loading}></Lists>
             </div>
         );
     }

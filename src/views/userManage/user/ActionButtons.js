@@ -46,9 +46,9 @@ class ActionButtons extends React.Component {
                     action="/kyfadm-api/user/import.json"
                     onChange={this.onUpLoadChange}
                     >
-                        <Button type="primary" >{this.state.uploadText}</Button>
+                        <Button type="primary" disabled>{this.state.uploadText}</Button>
                     </Upload>
-                    <Button type="primary" style={{marginLeft: '10px'}} onClick={this.export}>导出</Button>
+                    <Button type="primary" style={{marginLeft: '10px'}} onClick={this.export} disabled>导出</Button>
                 </div>
                 <Button type="primary" className={style.rightBtn} style={{top: '15px'}} onClick={() => this.setState({visible: true})}>新建用户</Button>
                 <NewUserModal visible={this.state.visible} toggleVisible={this.toggleVisible} resetFormAndGet={this.props.resetFormAndGet}/>

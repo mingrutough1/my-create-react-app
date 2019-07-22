@@ -33,6 +33,7 @@ class ActionButtons extends React.Component {
         }).then((res) => {
             if (res.data.code === '0') {
                 message.success(`全部删除成功`);
+                this.props.resetFormAndGet();
             }
         });
     }

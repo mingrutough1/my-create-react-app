@@ -40,7 +40,7 @@ class PublicFactor extends React.Component {
             this.getFactors();
         });
     }
-    setCurPageAndFet = (pno) => {
+    setCurPageAndGet = (pno) => {
         this.setState({
             pno,
         }, ()=> {
@@ -82,7 +82,7 @@ class PublicFactor extends React.Component {
                 const data = res.data.data;
                 const result = data.result || [];
                 result.forEach((item, index) => {
-                    item.order = index + 1;
+                    item.order = (data.pno - 1)*10 + index + 1;
                     item.key = item.pid;
                 });
                 this.setState({
@@ -113,13 +113,13 @@ class PublicFactor extends React.Component {
             pno,
             size,
             total,
-            setCurPageAndFet: this.setCurPageAndFet
+            setCurPageAndGet: this.setCurPageAndGet
         }
         return (
             <div className={style.container}>
                 <FilterForms getFactors={this.getFactors} {...form}></FilterForms>
                 <ActionButtons resetFormAndGet={this.resetFormAndGet}></ActionButtons>
-                <Lists factorListData={this.state.factorListData} loading={this.state.loading} {...pagi}></Lists>
+                <Lists factorListData={this.state.factorListData} loading={this.state.loading} {...pagi} getFactors={this.getFactors}></Lists>
             </div>
         );
     }
