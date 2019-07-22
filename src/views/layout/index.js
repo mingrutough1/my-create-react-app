@@ -6,7 +6,7 @@ import style from './style.module.scss';
 import UserManage from '@/views/userManage/user';
 import PublicFactor from '@/views/researchManage/publicFactor';
 import NotFound from '@/views/notFound';
-import RouteGuard from '@/components/RouteGuard';
+import RouteGuard from '@/components/RouteGuard/switch';
 
 import {
     Switch,
@@ -19,11 +19,6 @@ const authRoute = [
         path: '/userManage',
         exact: true,
         component: UserManage,
-    },
-    {
-        path: '/publicFactor',
-        exact: true,
-        component: PublicFactor,
     }
 ];
 class AppLayout extends React.Component {
@@ -45,6 +40,7 @@ class AppLayout extends React.Component {
                                     <RouteGuard path={item.path} exact={item.exact} component={item.component} key={item.path}></RouteGuard>
                                 ))
                             }
+                            <Route  path="/publicFactor" component={PublicFactor} exact></Route>                                                                                               
                             <Route component={NotFound}></Route>                                                                                               
                         </Switch>  
                     </div>

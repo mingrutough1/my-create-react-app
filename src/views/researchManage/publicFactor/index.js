@@ -4,8 +4,8 @@ import style from './style.module.scss';
 import FilterForms from './FilterForms';
 import ActionButtons from './ActionButtons';
 import Lists from './Lists';
-
-
+import AuthHoc from '@/components/RouteGuard/hoc';
+@AuthHoc
 class PublicFactor extends React.Component {
     constructor(props) {
         super(props);

@@ -23,7 +23,7 @@ class Nav extends React.Component {
       current: pathname.slice(1),
       openKeys: [this.openKeysMap[pathname.slice(1)]]
     });
-    history.listen((e) => {
+    this.unListen = history.listen((e) => {
       this.setState({
         current: e.pathname.slice(1),
       });
@@ -33,6 +33,9 @@ class Nav extends React.Component {
         });
       }
     });
+  }
+  componentWillUnmount(){
+    this.unListen();
   }
   handleOpenChange = e => {
     this.setState({
