@@ -19,6 +19,7 @@ const columns = [
       title: '因子ID',
       dataIndex: 'factorId',
       key: 'factorId',
+      with: 200
     },
     {
       title: '因子code',
@@ -79,24 +80,27 @@ const columns = [
     },
     {
       title: '计算细节',
-      dataIndex: 'dataProcessDetail',
       key: 'dataProcessDetail',
-      width: 200
+      render: (data) => {
+        return (<div style={wordElipsis} title={data.dataProcessDetail}>{data.dataProcessDetail}</div>)
+      }
     },
     {
       title: '操作',
       fixed: 'right',
       key: 'action',
       width: 80,
-      render: () => <a href="javascript:;">action</a>},
+      render: (data) => <a href="javascript:;" onClick={deleteItem(data.factorId)}>删除</a>},
   ];
 
-function handleSwich (userId) {
+function deleteItem (factorId) {
   return () => {
-    $axios.post('/user/delete.json', {
-      userId
+    $axios.post('/factor/delete.json', {
+      factorId,
+      all: false
     }).then((res) => {
       if (res.data.code === '0') {
+        this.props.getUsers();
       }
     });
   }

@@ -31,7 +31,7 @@ const status = [
 
 const whiteList = [
   '/login.json',
-  '/user/delete.json'
+  // '/factor/delete.json'
 ];
 const instance = axios.create({
     baseURL: '/kyfadm-api',

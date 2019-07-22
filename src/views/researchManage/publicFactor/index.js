@@ -62,6 +62,7 @@ class PublicFactor extends React.Component {
             factorCode,
             factorName,
             tier,
+            objectType,
             pno,
             size
         };

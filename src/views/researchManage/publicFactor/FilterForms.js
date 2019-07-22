@@ -7,10 +7,24 @@ const { Option } = Select;
 class FilterForms extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            objectTypeOptions: []
+        };
+    }
+    componentWillMount() {
+        $axios.get('/factor/object/type.json').then((res) => {
+            if (res.data.code === '0') {
+                this.setState({
+                    objectTypeOptions: res.data.data 
+                });
+            }
+        });
     }
     getFactors = () => {
-        this.props.getFactors();
+        setTimeout(() => {
+            this.props.setFormState('pno', 1);
+            this.props.getFactors();
+        }, 0);
     }
     handleInputChange = type => (e) => {
         this.props.setFormState(type, e.target.value);
@@ -35,13 +49,15 @@ class FilterForms extends React.Component {
                     <Form.Item label="层级：">
                         <Input value={tier} onChange={this.handleInputChange('tier')} allowClear/>
                     </Form.Item>
-                    {/* <Form.Item label="对象类型：">
+                    <Form.Item label="对象类型：">
                         <Select value={objectType} style={{ width: 120 }} onChange={this.handleSelectChange('objectType')}>
-                            <Option value="all">全部</Option>
-                            <Option value="true">是</Option>
-                            <Option value="">否</Option>
+                            {
+                                this.state.objectTypeOptions.map(item =>(
+                                    item ? <Option value={item} key={item}>{item}</Option> : null
+                                ))
+                            }
                         </Select>
-                    </Form.Item> */}
+                    </Form.Item>
                     <Form.Item label="是否底层：">
                         <Select value={isBottom} style={{ width: 120 }} onChange={this.handleSelectChange('isBottom')}>
                             <Option value="all">全部</Option>

@@ -45,7 +45,7 @@ const columns = [
       width: 100,
       key: 'action',
       render: (data) => {
-        return (<Switch defaultChecked={data.isValid} onChange={handleSwich(data)}></Switch>)
+        return (<Switch defaultChecked={data.isValid} onChange={handleSwich(data)} ></Switch>)
       }
     },
   ];
@@ -55,9 +55,6 @@ function handleSwich (data) {
     $axios.post('/user/changeValid.json', {
       userId: data.userKey,
       isValid: !data.isValid
-    }).then((res) => {
-      if (res.data.code === '0') {
-      }
     });
   }
 }
